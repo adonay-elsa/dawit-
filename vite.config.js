@@ -1,7 +1,15 @@
+import { copyFileSync } from 'node:fs'
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 
-// https://vite.dev/config/
+const githubPagesFallback = () => ({
+  name: 'github-pages-fallback',
+  closeBundle() {
+    copyFileSync('dist/index.html', 'dist/404.html')
+  },
+})
+
 export default defineConfig({
-  plugins: [react()],
+  base: './',
+  plugins: [react(), githubPagesFallback()],
 })
